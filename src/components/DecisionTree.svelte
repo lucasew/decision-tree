@@ -1,17 +1,21 @@
 <script lang="ts">
-import type {DecisionTree} from "../Model";
+import {DecisionTree, i18nGet} from "../Model";
 import DecisionTreeInput from "./DecisionTreeInput.svelte";
 
 import decisionTreeStore from "../stores/decisionTreeStore";
 import Decision from "../components/Decision.svelte";
 import DecisionReset from "../components/DecisionReset.svelte";
+import i18n from "../i18n";
 
 let tree = Promise.resolve<DecisionTree>(null);
-decisionTreeStore.subscribe(t => tree = t)
+decisionTreeStore.subscribe(t => {
+    console.log(t)
+    tree = t
+})
 </script>
 
 {#await tree}
-    <h1>Carregando</h1>
+    <h1>{i18nGet(i18n.loading)}</h1>
 {:then decisionTreeVal}
     {#if decisionTreeVal == null}
         <DecisionTreeInput/>
@@ -20,6 +24,6 @@ decisionTreeStore.subscribe(t => tree = t)
         <DecisionReset />
     {/if}
 {:catch error}
-    <h1>Erro {error.message || error}</h1>
+    <h1>{i18nGet(i18n.error)} {error.message || error}</h1>
     <DecisionReset />
 {/await}

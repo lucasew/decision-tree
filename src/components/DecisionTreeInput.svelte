@@ -1,5 +1,7 @@
 <script lang="ts">
-import type { DecisionTree } from "../Model";
+import i18n from "../i18n";
+
+import { DecisionTree, i18nGet } from "../Model";
 
 let url = ""
 function handleClick() {
@@ -31,7 +33,7 @@ function setupDummyState() {
 }
 </script>
 
-<h1>URL da decision tree</h1>
+<h1>{i18nGet(i18n.inputLabel)}</h1>
 <input bind:value={url} placeholder="URL">
-<button on:click={handleClick}>Carregar</button>
-<button on:click={setupDummyState}>Dummy</button>
+<button on:click={handleClick}>{i18nGet(i18n.load)}</button>
+<button on:click={setupDummyState}>{i18nGet(i18n.example)}</button>

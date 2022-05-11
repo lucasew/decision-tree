@@ -1,5 +1,6 @@
 <script lang="ts">
     import SvelteMarkdown from 'svelte-markdown';
+    import i18n from '../i18n';
 
     import {DecisionTree, i18nGet } from "../Model";
     import decisionTreeStore from "../stores/decisionTreeStore";
@@ -39,10 +40,10 @@
 </script>
 
 {#await resolved}
-    <h1>Loading...</h1>
+    <h1>{i18nGet(i18n.loading)}</h1>
 {:then data}
     {#if data == null}
-        <h1>Fim de linha</h1>
+        <h1>{i18nGet(i18n.endOfLine)}</h1>
     {:else}
         <h1>
             <SvelteMarkdown source={i18nGet(data.title)} />
@@ -62,7 +63,7 @@
         {/if}
     {/if}
 {:catch error}
-    <h1>Error {error.message || error}</h1>
+    <h1>{i18nGet(i18n.error)} {error.message || error}</h1>
 {/await}
 
 <style>

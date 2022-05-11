@@ -1,15 +1,19 @@
 <script lang="ts">
-    import DecisionTree, { i18nGet } from "./DecisionTreeModel";
-    import decisionTreeStore from "./decisionTreeStore";
     import SvelteMarkdown from 'svelte-markdown';
 
-    const route = window.location.pathname.split('/').slice(1).filter(i => i !== "")
+    import {DecisionTree, i18nGet } from "../Model";
+    import decisionTreeStore from "../stores/decisionTreeStore";
+    import locationStore from "../stores/location";
+
+    let url = new URL(window.location.href)
+    locationStore.subscribe(u => url = u)
+    const route = url.pathname.split('/').slice(1).filter(i => i !== "")
+
     let decisionTree: Promise<DecisionTree> = Promise.resolve(null);
     decisionTreeStore.subscribe(d => decisionTree = d)
 
     async function resolveNode(_tree: Promise<DecisionTree>, route: string[]): Promise<DecisionTree> {
         const tree = await _tree
-        console.log(tree, route)
         if (!tree) {
             return null
         }
@@ -23,8 +27,12 @@
         return resolveNode(Promise.resolve(node), route.slice(1))
     }
     function handleJump(key: string) {
-        if (window.location.pathname[window.location.pathname.length - 1] !== '/') key = `/${key}`
-        return () => window.location.pathname += key
+        if (url.pathname[url.pathname.length - 1] !== '/') key = `/${key}`
+        return () => {
+            let u = new URL(url.toString())
+            u.pathname += key
+            window.history.pushState({}, '', u)
+        }
     }
     let resolved = Promise.resolve<DecisionTree>(null)
     $: resolved = resolveNode(decisionTree, route)

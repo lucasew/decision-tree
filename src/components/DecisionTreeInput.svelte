@@ -1,11 +1,11 @@
 <script lang="ts">
-import DecisionTree from "./DecisionTreeModel";
+import type { DecisionTree } from "../Model";
 
 let url = ""
 function handleClick() {
-    let urlParams = new URLSearchParams(window.location.search)
-    urlParams.set("tree", url)
-    window.location.search = urlParams.toString()
+    let u = new URL(window.location.href)
+    u.searchParams.set('tree', url)
+    window.history.pushState({}, '', u)
 }
 function setupDummyState() {
     const dummyState: DecisionTree = {
@@ -25,9 +25,9 @@ function setupDummyState() {
             }
         }
     }
-    let urlParams = new URLSearchParams(window.location.search)
-    urlParams.set("tree", btoa(JSON.stringify(dummyState)))
-    window.location.search = urlParams.toString()
+    let u = new URL(window.location.href)
+    u.searchParams.set("tree", btoa(JSON.stringify(dummyState)))
+    window.history.pushState({}, '', u)
 }
 </script>
 

@@ -1,10 +1,10 @@
 <script lang="ts">
-import DecisionTree from "./DecisionTreeModel";
+import type {DecisionTree} from "../Model";
 import DecisionTreeInput from "./DecisionTreeInput.svelte";
 
-import decisionTreeStore from "./decisionTreeStore";
-import Decision from "./Decision.svelte";
-import DecisionReset from "./DecisionReset.svelte";
+import decisionTreeStore from "../stores/decisionTreeStore";
+import Decision from "../components/Decision.svelte";
+import DecisionReset from "../components/DecisionReset.svelte";
 
 let tree = Promise.resolve<DecisionTree>(null);
 decisionTreeStore.subscribe(t => tree = t)

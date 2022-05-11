@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DecisionTree from './DecisionTree.svelte';
+	import DecisionTree from './components/Decision.svelte';
 </script>
 
 <div id="content">

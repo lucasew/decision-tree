@@ -14,11 +14,6 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - name: Install Nix
-        uses: cachix/install-nix-action@v26
-        with:
-          nix_path: nixpkgs=channel:nixos-unstable
-
       - name: Checkout
         uses: actions/checkout@v4
 

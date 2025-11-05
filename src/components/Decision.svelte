@@ -1,5 +1,5 @@
 <script lang="ts">
-    import SvelteMarkdown from 'svelte-markdown';
+    import Markdown from './Markdown.svelte';
     import i18n from '../i18n';
 
     import {DecisionTree, i18nGet } from "../Model";
@@ -54,10 +54,10 @@
         <div class="space-y-6">
             <div class="prose prose-lg max-w-none">
                 <h1 class="text-4xl font-bold mb-4">
-                    <SvelteMarkdown source={i18nGet(data.title)} />
+                    <Markdown source={i18nGet(data.title)} />
                 </h1>
                 <div class="text-base-content/80">
-                    <SvelteMarkdown source={i18nGet(data.description)} />
+                    <Markdown source={i18nGet(data.description)} />
                 </div>
             </div>
 
@@ -73,10 +73,10 @@
                             <div class="card-body text-left">
                                 <div class="prose max-w-none">
                                     <h3 class="card-title text-2xl mb-2">
-                                        <SvelteMarkdown source={i18nGet(alternative.title)}/>
+                                        <Markdown source={i18nGet(alternative.title)}/>
                                     </h3>
                                     <div class="text-base-content/70">
-                                        <SvelteMarkdown source={i18nGet(alternative.description)} />
+                                        <Markdown source={i18nGet(alternative.description)} />
                                     </div>
                                 </div>
                             </div>

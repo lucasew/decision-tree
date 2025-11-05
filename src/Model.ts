@@ -7,7 +7,11 @@ export interface DecisionTree {
 export type i18Led = Record<string, string> | string
 
 
-export function i18nGet(txt: i18Led) {
+export function i18nGet(txt: i18Led): string {
+    if (typeof txt === 'string') {
+        return txt;
+    }
     const locale = navigator.language || (navigator as any).userLanguage || 'default'
-    return txt[locale.replaceAll("-", "_")] || txt
+    const localizedKey = locale.replaceAll("-", "_")
+    return txt[localizedKey] || Object.values(txt)[0] || ''
 }

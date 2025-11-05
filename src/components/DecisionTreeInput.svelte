@@ -33,7 +33,34 @@ function setupDummyState() {
 }
 </script>
 
-<h1>{i18nGet(i18n.inputLabel)}</h1>
-<input bind:value={url} placeholder="URL">
-<button on:click={handleClick}>{i18nGet(i18n.load)}</button>
-<button on:click={setupDummyState}>{i18nGet(i18n.example)}</button>
+<div class="space-y-6">
+    <h1 class="text-3xl font-bold text-center">{i18nGet(i18n.inputLabel)}</h1>
+
+    <div class="form-control w-full">
+        <label class="label" for="tree-url">
+            <span class="label-text">URL</span>
+        </label>
+        <input
+            id="tree-url"
+            type="text"
+            bind:value={url}
+            placeholder="URL"
+            class="input input-bordered w-full"
+        />
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3">
+        <button
+            on:click={handleClick}
+            class="btn btn-primary flex-1"
+        >
+            {i18nGet(i18n.load)}
+        </button>
+        <button
+            on:click={setupDummyState}
+            class="btn btn-secondary flex-1"
+        >
+            {i18nGet(i18n.example)}
+        </button>
+    </div>
+</div>

@@ -141,28 +141,30 @@
                     {#each Object.entries(resolved.alternatives) as [key, alternative], index}
                         <button
                             onclick={handleJump(key)}
-                            class="group card bg-gradient-to-br from-base-100 to-base-200 hover:from-base-200 hover:to-base-300 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-base-300 hover:border-primary hover:scale-[1.02]"
+                            class="group card bg-base-100 hover:bg-base-200 shadow-md hover:shadow-xl transition-all duration-200 cursor-pointer hover:scale-[1.01]"
                         >
-                            <div class="card-body">
-                                <div class="flex items-start gap-4">
-                                    <div class="badge badge-primary badge-lg font-bold shrink-0 mt-1">
+                            <div class="card-body gap-3">
+                                <div class="flex items-center justify-between">
+                                    <div class="badge badge-primary badge-lg font-bold">
                                         {String.fromCharCode(65 + index)}
                                     </div>
-                                    <div class="flex-1 text-left space-y-2">
-                                        <div class="prose max-w-none">
-                                            <h3 class="!text-2xl !font-bold !mb-2 !mt-0 group-hover:text-primary transition-colors">
-                                                <Markdown source={i18nGet(alternative.title)}/>
-                                            </h3>
-                                            {#if alternative.description}
-                                                <div class="text-base text-base-content/70 !mt-2">
-                                                    <Markdown source={i18nGet(alternative.description)} />
-                                                </div>
-                                            {/if}
-                                        </div>
-                                    </div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-base-content/30 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-base-content/30 group-hover:text-primary group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                                     </svg>
+                                </div>
+                                <div class="text-left space-y-2">
+                                    <div class="prose max-w-none">
+                                        <h3 class="!text-2xl !font-bold !mb-0 !mt-0 group-hover:text-primary transition-colors">
+                                            <Markdown source={i18nGet(alternative.title)}/>
+                                        </h3>
+                                    </div>
+                                    {#if alternative.description}
+                                        <div class="prose max-w-none">
+                                            <div class="text-base text-base-content/70 !mt-0">
+                                                <Markdown source={i18nGet(alternative.description)} />
+                                            </div>
+                                        </div>
+                                    {/if}
                                 </div>
                             </div>
                         </button>

@@ -1,7 +1,7 @@
 <script lang="ts">
 import i18n from "../i18n";
-
-import { DecisionTree, i18nGet } from "../Model";
+import type { DecisionTree } from "../Model";
+import { i18nGet } from "../Model";
 
 let url = ""
 function handleClick() {

@@ -19,14 +19,12 @@ async function getDecisionTreeFromURL(url: URL): Promise<DecisionTree | null> {
     }
 }
 
-let currentUrl = $state(new URL(window.location.href));
-let tree = $state<Promise<DecisionTree | null>>(getDecisionTreeFromURL(currentUrl));
+let tree = $state<Promise<DecisionTree | null>>(getDecisionTreeFromURL(new URL(window.location.href)));
 
 // Listen to URL changes
 $effect(() => {
     const updateUrl = () => {
-        currentUrl = new URL(window.location.href);
-        tree = getDecisionTreeFromURL(currentUrl);
+        tree = getDecisionTreeFromURL(new URL(window.location.href));
     };
 
     window.addEventListener('popstate', updateUrl);

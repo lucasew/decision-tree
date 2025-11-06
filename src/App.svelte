@@ -2,24 +2,14 @@
 	import DecisionTree from './components/DecisionTree.svelte';
 </script>
 
-<div id="content">
-	<DecisionTree />
+<div class="min-h-screen bg-gradient-to-br from-base-200 via-base-300 to-base-200">
+	<div class="container mx-auto px-4 py-8 md:py-12">
+		<div class="max-w-5xl mx-auto">
+			<div class="card bg-base-100 shadow-2xl backdrop-blur-sm">
+				<div class="card-body p-6 md:p-10">
+					<DecisionTree />
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-
-<style>
-	:global(body) {
-		width: 100vw;
-		height: 100vh;
-		margin: 0px;
-		padding: 0px;
-	}
-	div#content {
-		border: 1px solid;
-		border-radius: 1rem;
-		max-width: max(600px, 80vw);
-		margin-left: auto;
-		margin-right: auto;
-		margin-top: 10vh;
-		padding: 0.5rem;
-	}
-</style>

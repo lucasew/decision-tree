@@ -78,10 +78,10 @@
 </script>
 
 {#if route.length > 0}
-    <div class="mb-4">
+    <div class="mb-6">
         <button
             onclick={handleBack}
-            class="btn btn-ghost gap-2"
+            class="btn btn-ghost btn-sm gap-2 hover:gap-3 transition-all"
         >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -92,47 +92,83 @@
 {/if}
 
 {#if resolved == null}
-    <div class="alert alert-info">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        <h1 class="text-xl font-semibold">{i18nGet(i18n.endOfLine)}</h1>
+    <div class="hero min-h-[300px] bg-base-200 rounded-box">
+        <div class="hero-content text-center">
+            <div class="max-w-md">
+                <div class="text-6xl mb-4">🎯</div>
+                <h1 class="text-3xl font-bold">{i18nGet(i18n.endOfLine)}</h1>
+                <p class="py-4 text-base-content/70">
+                    Você chegou ao final desta árvore de decisão
+                </p>
+            </div>
+        </div>
     </div>
 {:else}
-    <div class="space-y-6">
-        <div class="prose prose-lg max-w-none">
-            <h1 class="text-4xl font-bold mb-4">
-                <Markdown source={i18nGet(resolved.title)} />
-            </h1>
-            {#if resolved.description}
-                <div class="text-base-content/80">
-                    <Markdown source={i18nGet(resolved.description)} />
+    <div class="space-y-8">
+        <!-- Breadcrumb -->
+        {#if route.length > 0}
+            <div class="text-sm breadcrumbs">
+                <ul>
+                    <li><a href="/" onclick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/'); }}>Início</a></li>
+                    {#each route as segment, i}
+                        <li class="font-semibold text-primary">{segment}</li>
+                    {/each}
+                </ul>
+            </div>
+        {/if}
+
+        <!-- Main content -->
+        <div class="space-y-6">
+            <div class="prose prose-lg max-w-none">
+                <h1 class="!text-5xl !font-extrabold !mb-6 !leading-tight">
+                    <Markdown source={i18nGet(resolved.title)} />
+                </h1>
+                {#if resolved.description}
+                    <div class="text-lg leading-relaxed">
+                        <Markdown source={i18nGet(resolved.description)} />
+                    </div>
+                {/if}
+            </div>
+
+            {#if resolved.alternatives != null}
+                <div class="divider my-8">
+                    <span class="text-base-content/60 font-medium">
+                        Escolha uma opção
+                    </span>
+                </div>
+
+                <div class="grid gap-4">
+                    {#each Object.entries(resolved.alternatives) as [key, alternative], index}
+                        <button
+                            onclick={handleJump(key)}
+                            class="group card bg-gradient-to-br from-base-100 to-base-200 hover:from-base-200 hover:to-base-300 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-base-300 hover:border-primary hover:scale-[1.02]"
+                        >
+                            <div class="card-body">
+                                <div class="flex items-start gap-4">
+                                    <div class="badge badge-primary badge-lg font-bold shrink-0 mt-1">
+                                        {String.fromCharCode(65 + index)}
+                                    </div>
+                                    <div class="flex-1 text-left space-y-2">
+                                        <div class="prose max-w-none">
+                                            <h3 class="!text-2xl !font-bold !mb-2 !mt-0 group-hover:text-primary transition-colors">
+                                                <Markdown source={i18nGet(alternative.title)}/>
+                                            </h3>
+                                            {#if alternative.description}
+                                                <div class="text-base text-base-content/70 !mt-2">
+                                                    <Markdown source={i18nGet(alternative.description)} />
+                                                </div>
+                                            {/if}
+                                        </div>
+                                    </div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-base-content/30 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </button>
+                    {/each}
                 </div>
             {/if}
         </div>
-
-        {#if resolved.alternatives != null}
-            <div class="divider"></div>
-            <div class="space-y-3">
-                <h2 class="text-xl font-semibold mb-4">Choose an option:</h2>
-                {#each Object.entries(resolved.alternatives) as [key, alternative]}
-                    <button
-                        onclick={handleJump(key)}
-                        class="card card-compact w-full bg-base-200 hover:bg-base-300 shadow-md hover:shadow-lg transition-all cursor-pointer border-2 border-transparent hover:border-primary"
-                    >
-                        <div class="card-body text-left">
-                            <div class="prose max-w-none">
-                                <h3 class="card-title text-2xl mb-2">
-                                    <Markdown source={i18nGet(alternative.title)}/>
-                                </h3>
-                                {#if alternative.description}
-                                    <div class="text-base-content/70">
-                                        <Markdown source={i18nGet(alternative.description)} />
-                                    </div>
-                                {/if}
-                            </div>
-                        </div>
-                    </button>
-                {/each}
-            </div>
-        {/if}
     </div>
 {/if}

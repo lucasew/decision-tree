@@ -56,9 +56,6 @@ function setupDummyState() {
         <div class="form-control w-full">
             <label class="label" for="tree-url">
                 <span class="label-text text-base font-medium">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                    </svg>
                     {i18nGet(i18n.inputLabel)}
                 </span>
             </label>
@@ -79,22 +76,15 @@ function setupDummyState() {
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <button
                 onclick={handleClick}
-                class="btn btn-primary btn-lg gap-2"
+                class="btn btn-primary btn-lg"
                 disabled={!url}
             >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                </svg>
                 {i18nGet(i18n.load)}
             </button>
             <button
                 onclick={setupDummyState}
-                class="btn btn-outline btn-lg gap-2"
+                class="btn btn-outline btn-lg"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
                 {i18nGet(i18n.example)}
             </button>
         </div>

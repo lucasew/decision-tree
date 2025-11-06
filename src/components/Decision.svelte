@@ -81,11 +81,8 @@
     <div class="mb-6">
         <button
             onclick={handleBack}
-            class="btn btn-ghost btn-sm gap-2 hover:gap-3 transition-all"
+            class="btn btn-ghost btn-sm"
         >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
             Voltar
         </button>
     </div>
@@ -144,13 +141,8 @@
                             class="group card bg-base-100 hover:bg-base-200 shadow-md hover:shadow-xl transition-all duration-200 cursor-pointer hover:scale-[1.01]"
                         >
                             <div class="card-body gap-3">
-                                <div class="flex items-center justify-between">
-                                    <div class="badge badge-primary badge-lg font-bold">
-                                        {String.fromCharCode(65 + index)}
-                                    </div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-base-content/30 group-hover:text-primary group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                    </svg>
+                                <div class="badge badge-primary badge-lg font-bold">
+                                    {String.fromCharCode(65 + index)}
                                 </div>
                                 <div class="text-left space-y-2">
                                     <div class="prose max-w-none">

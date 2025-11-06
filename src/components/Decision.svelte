@@ -22,9 +22,25 @@
         window.addEventListener('popstate', updateUrl);
         window.addEventListener('hashchange', updateUrl);
 
+        // Intercept pushState and replaceState
+        const originalPushState = history.pushState;
+        const originalReplaceState = history.replaceState;
+
+        history.pushState = function(...args) {
+            originalPushState.apply(this, args);
+            updateUrl();
+        };
+
+        history.replaceState = function(...args) {
+            originalReplaceState.apply(this, args);
+            updateUrl();
+        };
+
         return () => {
             window.removeEventListener('popstate', updateUrl);
             window.removeEventListener('hashchange', updateUrl);
+            history.pushState = originalPushState;
+            history.replaceState = originalReplaceState;
         };
     });
 

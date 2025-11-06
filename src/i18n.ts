@@ -15,7 +15,7 @@ let i18n: Record<string,i18Led> = {
     },
     inputLabel: {
         'en_US': "URL or base64 encoded decision tree",
-        'pt_BR': "URL ou codificado em base64 da árvore de decisão"
+        'pt_BR': "URL da árvore de decisão ou JSON em base64"
     },
     load: {
         'en_US': "Load",

@@ -30,6 +30,6 @@
   },
   "dependencies": {
     "isomorphic-dompurify": "^2.31.0",
-    "marked": "^16.4.1"
+    "marked": "^17.0.0"
   }
 }

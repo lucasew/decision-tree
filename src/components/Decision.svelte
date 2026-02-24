@@ -1,8 +1,10 @@
 <script lang="ts">
     import Markdown from './Markdown.svelte';
-    import i18n from '../i18n';
-    import type {DecisionTree} from "../Model";
-    import { i18nGet } from "../Model";
+    import i18n from '../lib/i18n';
+    import type { DecisionTree } from "../lib/types";
+    import { i18nGet } from "../lib/i18n";
+    import { resolveNode } from "../lib/tree";
+    import { router } from "../lib/router.svelte";
 
     interface Props {
         decisionTree: DecisionTree;
@@ -10,68 +12,23 @@
 
     let { decisionTree }: Props = $props();
 
-    let url = $state(new URL(window.location.href));
-    let route = $derived(url.pathname.split('/').slice(1).filter(i => i !== ""));
-
-    // Listen to URL changes
-    $effect(() => {
-        const updateUrl = () => {
-            url = new URL(window.location.href);
-        };
-
-        window.addEventListener('popstate', updateUrl);
-        window.addEventListener('hashchange', updateUrl);
-
-        // Intercept pushState and replaceState
-        const originalPushState = history.pushState;
-        const originalReplaceState = history.replaceState;
-
-        history.pushState = function(...args) {
-            originalPushState.apply(this, args);
-            updateUrl();
-        };
-
-        history.replaceState = function(...args) {
-            originalReplaceState.apply(this, args);
-            updateUrl();
-        };
-
-        return () => {
-            window.removeEventListener('popstate', updateUrl);
-            window.removeEventListener('hashchange', updateUrl);
-            history.pushState = originalPushState;
-            history.replaceState = originalReplaceState;
-        };
-    });
-
-    function resolveNode(tree: DecisionTree | null, route: string[]): DecisionTree | null {
-        if (!tree) {
-            return null
-        }
-        if (route.length == 0) {
-            return tree
-        }
-        if (!tree?.alternatives && route.length > 0) {
-            return null
-        }
-        const node = tree?.alternatives[route[0]] || null
-        return resolveNode(node, route.slice(1))
-    }
+    let route = $derived(router.url.pathname.split('/').slice(1).filter(i => i !== ""));
 
     function handleJump(key: string) {
-        let pathname = url.pathname;
-        if (pathname[pathname.length - 1] !== '/') {
-            key = `/${key}`;
-        }
         return () => {
-            let u = new URL(url.toString());
-            u.pathname += key;
-            window.history.pushState({}, '', u);
+            let pathname = router.url.pathname;
+            let u = new URL(router.url.toString());
+            let k = key;
+            if (pathname[pathname.length - 1] !== '/') {
+                 k = `/${key}`;
+            }
+            u.pathname += k;
+            router.push(u);
         }
     }
 
     function handleBack() {
-        window.history.back();
+        router.back();
     }
 
     let resolved = $derived(resolveNode(decisionTree, route));
@@ -106,7 +63,7 @@
         {#if route.length > 0}
             <div class="text-sm breadcrumbs">
                 <ul>
-                    <li><a href="/" onclick={(e) => { e.preventDefault(); window.history.pushState({}, '', '/'); }}>Início</a></li>
+                    <li><a href="/" onclick={(e) => { e.preventDefault(); router.push('/'); }}>Início</a></li>
                     {#each route as segment, i}
                         <li class="font-semibold text-primary">{segment}</li>
                     {/each}

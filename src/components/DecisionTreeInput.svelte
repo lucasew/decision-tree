@@ -1,13 +1,14 @@
 <script lang="ts">
-import i18n from "../i18n";
-import type { DecisionTree } from "../Model";
-import { i18nGet } from "../Model";
+import i18n from "../lib/i18n";
+import type { DecisionTree } from "../lib/types";
+import { i18nGet } from "../lib/i18n";
+import { router } from "../lib/router.svelte";
 
 let url = $state("")
 function handleClick() {
-    let u = new URL(window.location.href)
+    let u = new URL(router.url.toString())
     u.searchParams.set('tree', url)
-    window.history.pushState({}, '', u)
+    router.push(u)
 }
 function setupDummyState() {
     const dummyState: DecisionTree = {
@@ -27,9 +28,9 @@ function setupDummyState() {
             }
         }
     }
-    let u = new URL(window.location.href)
+    let u = new URL(router.url.toString())
     u.searchParams.set("tree", btoa(JSON.stringify(dummyState)))
-    window.history.pushState({}, '', u)
+    router.push(u)
 }
 </script>
 

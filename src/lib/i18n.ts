@@ -1,6 +1,15 @@
-import type { i18Led } from "./Model";
+import type { i18Led } from "./types";
 
-let i18n: Record<string,i18Led> = {
+export function i18nGet(txt: i18Led): string {
+    if (typeof txt === 'string') {
+        return txt;
+    }
+    const locale = navigator.language || (navigator as any).userLanguage || 'default'
+    const localizedKey = locale.replaceAll("-", "_")
+    return txt[localizedKey] || Object.values(txt)[0] || ''
+}
+
+const i18n: Record<string, i18Led> = {
     loading: {
         'en_US': "Loading...",
         'pt_BR': "Carregando..."
@@ -27,4 +36,4 @@ let i18n: Record<string,i18Led> = {
     }
 }
 
-export default i18n
+export default i18n;

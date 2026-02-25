@@ -1,5 +1,10 @@
 import type { i18Led } from "./Model";
 
+/**
+ * Static localization strings for the application UI.
+ * Keys represent the UI element or message ID.
+ * Values are `i18Led` objects supporting multiple locales.
+ */
 let i18n: Record<string,i18Led> = {
     loading: {
         'en_US': "Loading...",

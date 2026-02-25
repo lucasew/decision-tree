@@ -1,10 +1,20 @@
+<!--
+  @component
+  Displays the current node of the decision tree based on the URL route.
+  Handles navigation between nodes (alternatives) and backtracking.
+  Renders the title, description (markdown), and choices.
+-->
 <script lang="ts">
     import Markdown from './Markdown.svelte';
     import i18n from '../i18n';
     import type {DecisionTree} from "../Model";
     import { i18nGet } from "../Model";
 
+    /**
+     * Props for the Decision component.
+     */
     interface Props {
+        /** The root of the decision tree to traverse. */
         decisionTree: DecisionTree;
     }
 
@@ -44,6 +54,13 @@
         };
     });
 
+    /**
+     * Recursively traverses the decision tree to find the node corresponding to the current route.
+     *
+     * @param tree - The current decision tree node being inspected.
+     * @param route - The remaining path segments to traverse.
+     * @returns The resolved `DecisionTree` node or null if the path is invalid.
+     */
     function resolveNode(tree: DecisionTree | null, route: string[]): DecisionTree | null {
         if (!tree) {
             return null
@@ -54,10 +71,17 @@
         if (!tree?.alternatives && route.length > 0) {
             return null
         }
-        const node = tree?.alternatives[route[0]] || null
+        const node = (tree?.alternatives as Record<string, DecisionTree>)[route[0]] || null
         return resolveNode(node, route.slice(1))
     }
 
+    /**
+     * Generates a click handler to navigate to a specific alternative (child node).
+     * It updates the browser's URL history to reflect the new path.
+     *
+     * @param key - The key of the selected alternative.
+     * @returns A function to be used as an event handler.
+     */
     function handleJump(key: string) {
         let pathname = url.pathname;
         if (pathname[pathname.length - 1] !== '/') {

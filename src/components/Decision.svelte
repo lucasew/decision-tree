@@ -71,8 +71,7 @@
         if (!tree?.alternatives && route.length > 0) {
             return null
         }
-        // @ts-ignore: Alternatives are guaranteed to exist here due to the check above
-        const node = tree?.alternatives[route[0]] || null
+        const node = (tree?.alternatives as Record<string, DecisionTree>)[route[0]] || null
         return resolveNode(node, route.slice(1))
     }
 

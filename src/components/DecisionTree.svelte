@@ -1,3 +1,9 @@
+<!--
+  @component
+  Orchestrates the loading and state management of the Decision Tree application.
+  It handles URL parsing to retrieve the tree data (either from a fetched URL or base64 encoded string)
+  and manages the browser history for navigation within the tree.
+-->
 <script lang="ts">
 import type {DecisionTree} from "../Model";
 import { i18nGet } from "../Model";
@@ -6,6 +12,16 @@ import Decision from "../components/Decision.svelte";
 import DecisionReset from "../components/DecisionReset.svelte";
 import i18n from "../i18n";
 
+/**
+ * Retrieves the decision tree data from the URL query parameters.
+ *
+ * It looks for a 'tree' parameter.
+ * - If the parameter starts with "http", it treats it as a URL and fetches the JSON.
+ * - Otherwise, it treats it as a base64 encoded JSON string and decodes it.
+ *
+ * @param url - The current page URL containing the 'tree' query parameter.
+ * @returns A promise that resolves to the `DecisionTree` object or null if not found.
+ */
 async function getDecisionTreeFromURL(url: URL): Promise<DecisionTree | null> {
     const tree = url.searchParams.get("tree")
     if (tree == null) {

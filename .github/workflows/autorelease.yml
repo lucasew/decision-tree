@@ -15,7 +15,7 @@ jobs:
       - name: Install mise
         uses: jdx/mise-action@v2
         with:
-          version: 2024.1.1 # Pinning mise version
+          version: 2025.2.3 # Pinning mise version
           install: true
 
       - name: Install

@@ -1,0 +1,39 @@
+name: autorelease
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  autorelease:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install mise
+        uses: jdx/mise-action@v2
+        with:
+          version: 2025.2.3 # Pinning mise version
+          install: true
+
+      - name: Install
+        run: mise run install
+
+      - name: Codegen
+        run: mise run codegen
+
+      - name: PR if Difference
+        id: create_pr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update codegen"
+          title: "chore: update codegen"
+          body: "Automated PR from codegen updates."
+          branch: "chore/update-codegen"
+          base: ${{ github.head_ref || github.ref_name }}
+
+      - name: CI
+        run: mise run ci

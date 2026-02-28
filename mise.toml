@@ -1,0 +1,27 @@
+[tools]
+node = "20.19.0"
+"ubi:lucasew/workspaced" = "latest"
+
+[tasks."install:npm"]
+run = "npm install"
+
+[tasks."test:npm"]
+run = "npm run test"
+
+[tasks.install]
+depends = ["install:*"]
+
+[tasks.lint]
+run = "workspaced codebase lint"
+
+[tasks.fmt]
+run = "workspaced codebase format"
+
+[tasks.test]
+depends = ["test:*"]
+
+[tasks.codegen]
+depends = ["codegen:*"]
+
+[tasks.ci]
+depends = ["lint", "test"]

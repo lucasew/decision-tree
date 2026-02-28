@@ -20,6 +20,9 @@ run = "workspaced codebase format"
 [tasks.test]
 depends = ["test:*"]
 
+[tasks."codegen:dummy"]
+run = "echo 'No codegen step'"
+
 [tasks.codegen]
 depends = ["codegen:*"]
 

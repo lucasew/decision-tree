@@ -33,6 +33,7 @@ jobs:
           title: "chore: update codegen"
           body: "Automated PR from codegen updates."
           branch: "chore/update-codegen"
+          base: ${{ github.head_ref || github.ref_name }}
 
       - name: CI
         run: mise run ci

@@ -1,8 +1,8 @@
 <script lang="ts">
-    import Markdown from './Markdown.svelte';
-    import i18n from '../i18n';
-    import type {DecisionTree} from "../Model";
-    import { i18nGet } from "../Model";
+    import Markdown from '../../../lib/ui/Markdown.svelte';
+    import i18n from '../../../lib/i18n';
+    import type {DecisionTree} from "../models/DecisionTree";
+    import { i18nGet } from "../../../lib/i18n";
 
     interface Props {
         decisionTree: DecisionTree;
@@ -54,7 +54,7 @@
         if (!tree?.alternatives && route.length > 0) {
             return null
         }
-        const node = tree?.alternatives[route[0]] || null
+        const node = tree?.alternatives?.[route[0]] || null
         return resolveNode(node, route.slice(1))
     }
 

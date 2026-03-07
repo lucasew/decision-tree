@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DecisionTree from './components/DecisionTree.svelte';
+	import DecisionTree from './features/decision-tree/components/DecisionTree.svelte';
 </script>
 
 <div class="min-h-screen bg-gradient-to-br from-base-200 via-base-300 to-base-200">

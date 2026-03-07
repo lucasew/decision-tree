@@ -1,21 +1,27 @@
 <script lang="ts">
-import type {DecisionTree} from "../Model";
-import { i18nGet } from "../Model";
+import type {DecisionTree} from "../models/DecisionTree";
+import { i18nGet } from "../../../lib/i18n";
 import DecisionTreeInput from "./DecisionTreeInput.svelte";
-import Decision from "../components/Decision.svelte";
-import DecisionReset from "../components/DecisionReset.svelte";
-import i18n from "../i18n";
+import Decision from "./Decision.svelte";
+import DecisionReset from "./DecisionReset.svelte";
+import i18n from "../../../lib/i18n";
+import { reportError } from "../../../lib/errors/reporter";
 
 async function getDecisionTreeFromURL(url: URL): Promise<DecisionTree | null> {
-    const tree = url.searchParams.get("tree")
-    if (tree == null) {
-        return null
-    }
-    if (tree.startsWith("http")) {
-        const r = await fetch(tree)
-        return r.json()
-    } else {
-        return JSON.parse(atob(tree))
+    try {
+        const tree = url.searchParams.get("tree")
+        if (tree == null) {
+            return null
+        }
+        if (tree.startsWith("http")) {
+            const r = await fetch(tree)
+            return r.json()
+        } else {
+            return JSON.parse(atob(tree))
+        }
+    } catch (err) {
+        reportError(err, { source: "getDecisionTreeFromURL", url: url.toString() })
+        throw err;
     }
 }
 
@@ -63,6 +69,7 @@ $effect(() => {
         <DecisionReset />
     {/if}
 {:catch error}
+    {reportError(error, { source: "DecisionTree Component Await Block" }) ?? ''}
     <h1>{i18nGet(i18n.error)} {error?.message || error}</h1>
     <DecisionReset />
 {/await}

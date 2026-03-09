@@ -54,7 +54,7 @@
         if (!tree?.alternatives && route.length > 0) {
             return null
         }
-        const node = tree?.alternatives[route[0]] || null
+        const node = tree?.alternatives?.[route[0]] || null
         return resolveNode(node, route.slice(1))
     }
 

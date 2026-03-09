@@ -1,0 +1,1 @@
+- 2026-03-09: Fixed undefined optional chain property access and missing accessibility attributes on form labels.

@@ -1,5 +1,10 @@
 import type { i18Led } from "./Model";
 
+/**
+ * Global application localization dictionary.
+ * Used for static labels across the UI components, as distinct from
+ * the user-provided translation blobs inside `DecisionTree` structures.
+ */
 let i18n: Record<string,i18Led> = {
     loading: {
         'en_US': "Loading...",

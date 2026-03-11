@@ -1,4 +1,10 @@
 <script lang="ts">
+/**
+ * Root orchestrator component for the application.
+ * Bootstraps the `DecisionTree` state based on URL search parameters.
+ * When the tree is loaded successfully, it dynamically swaps the UI
+ * between the `DecisionTreeInput` (when uninitialized) and the `Decision` view.
+ */
 import type {DecisionTree} from "../Model";
 import { i18nGet } from "../Model";
 import DecisionTreeInput from "./DecisionTreeInput.svelte";
@@ -6,6 +12,13 @@ import Decision from "../components/Decision.svelte";
 import DecisionReset from "../components/DecisionReset.svelte";
 import i18n from "../i18n";
 
+/**
+ * Attempts to parse the decision tree payload from the `?tree=` query param.
+ * Differentiates between a remote source to be fetched and inline base64 data.
+ *
+ * @param url - The fully qualified active URL payload.
+ * @returns The parsed DecisionTree structure, or null if no parameter exists.
+ */
 async function getDecisionTreeFromURL(url: URL): Promise<DecisionTree | null> {
     const tree = url.searchParams.get("tree")
     if (tree == null) {

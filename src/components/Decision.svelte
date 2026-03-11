@@ -1,4 +1,9 @@
 <script lang="ts">
+    /**
+     * Render container for an active `DecisionTree`.
+     * Manages browser history interceptors to translate path segments (like `/a/b`)
+     * into recursive descents through the tree structure without full page reloads.
+     */
     import Markdown from './Markdown.svelte';
     import i18n from '../i18n';
     import type {DecisionTree} from "../Model";
@@ -44,6 +49,14 @@
         };
     });
 
+    /**
+     * Recursively walks down the decision tree according to the ordered path segments from the URL.
+     * Returns `null` if the route is invalid or overshoots the available alternatives.
+     *
+     * @param tree - The root or current subset of the tree.
+     * @param route - Remaining URL path fragments to traverse.
+     * @returns The resolved descendant node, or `null` if resolution fails.
+     */
     function resolveNode(tree: DecisionTree | null, route: string[]): DecisionTree | null {
         if (!tree) {
             return null

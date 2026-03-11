@@ -1,4 +1,9 @@
 <script lang="ts">
+    /**
+     * Markdown-to-HTML UI renderer.
+     * Sanitizes external output locally before injection into the DOM,
+     * protecting against persistent cross-site scripting (XSS) via dynamic titles/descriptions.
+     */
     import { marked } from 'marked';
     import DOMPurify from 'isomorphic-dompurify';
 

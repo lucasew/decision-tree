@@ -1,14 +1,23 @@
 <script lang="ts">
+/**
+ * Uninitialized application view.
+ * Collects a URL or base64 string from the user, updating the search parameters
+ * so the parent orchestration component (`DecisionTree`) can fetch and mount the state.
+ */
 import i18n from "../i18n";
 import type { DecisionTree } from "../Model";
 import { i18nGet } from "../Model";
 
 let url = $state("")
+
+/** Update history state to prompt initialization of the provided Tree URL or Base64 payload. */
 function handleClick() {
     let u = new URL(window.location.href)
     u.searchParams.set('tree', url)
     window.history.pushState({}, '', u)
 }
+
+/** Mounts an interactive demonstration of a structured decision node with localization and markdown. */
 function setupDummyState() {
     const dummyState: DecisionTree = {
         title: "Teste **eoq** trabson",

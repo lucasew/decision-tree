@@ -66,7 +66,7 @@ function setupDummyState() {
                 placeholder="https://exemplo.com/tree.json ou base64..."
                 class="input input-bordered input-lg w-full text-base"
             />
-            <label class="label">
+            <label class="label" for="tree-url">
                 <span class="label-text-alt text-base-content/60">
                     Cole uma URL ou JSON codificado em base64
                 </span>

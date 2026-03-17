@@ -1,8 +1,9 @@
 <script lang="ts">
-    import Markdown from './Markdown.svelte';
-    import i18n from '../i18n';
-    import type {DecisionTree} from "../Model";
-    import { i18nGet } from "../Model";
+    import Markdown from '../../lib/ui/Markdown.svelte';
+    import i18n from '../../lib/i18n/i18n';
+    import type {DecisionTree} from "./Model";
+    import { i18nGet } from "../../lib/i18n/types";
+    import { createHistoryWatcher } from '../../lib/router/history';
 
     interface Props {
         decisionTree: DecisionTree;
@@ -19,29 +20,7 @@
             url = new URL(window.location.href);
         };
 
-        window.addEventListener('popstate', updateUrl);
-        window.addEventListener('hashchange', updateUrl);
-
-        // Intercept pushState and replaceState
-        const originalPushState = history.pushState;
-        const originalReplaceState = history.replaceState;
-
-        history.pushState = function(...args) {
-            originalPushState.apply(this, args);
-            updateUrl();
-        };
-
-        history.replaceState = function(...args) {
-            originalReplaceState.apply(this, args);
-            updateUrl();
-        };
-
-        return () => {
-            window.removeEventListener('popstate', updateUrl);
-            window.removeEventListener('hashchange', updateUrl);
-            history.pushState = originalPushState;
-            history.replaceState = originalReplaceState;
-        };
+        return createHistoryWatcher(updateUrl);
     });
 
     function resolveNode(tree: DecisionTree | null, route: string[]): DecisionTree | null {
@@ -51,10 +30,10 @@
         if (route.length == 0) {
             return tree
         }
-        if (!tree?.alternatives && route.length > 0) {
+        if (!tree.alternatives && route.length > 0) {
             return null
         }
-        const node = tree?.alternatives[route[0]] || null
+        const node = tree.alternatives?.[route[0]] || null
         return resolveNode(node, route.slice(1))
     }
 

@@ -1,4 +1,4 @@
-import type { i18Led } from "./Model";
+import type { i18Led } from "./types";
 
 let i18n: Record<string,i18Led> = {
     loading: {

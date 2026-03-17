@@ -1,0 +1,13 @@
+[tools]
+node = "22.22.1"
+
+[tasks.ci]
+description = "Run continuous integration checks"
+run = [
+    "npm run check",
+    "npm run test"
+]
+
+[tasks.test]
+description = "Run tests"
+run = "npm run test"

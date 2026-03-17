@@ -1,7 +1,7 @@
 <script lang="ts">
-import i18n from "../i18n";
-import type { DecisionTree } from "../Model";
-import { i18nGet } from "../Model";
+import i18n from "../../lib/i18n/i18n";
+import type { DecisionTree } from "./Model";
+import { i18nGet } from "../../lib/i18n/types";
 
 let url = $state("")
 function handleClick() {

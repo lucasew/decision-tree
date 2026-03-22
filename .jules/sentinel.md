@@ -1,0 +1,1 @@
+- 2026-03-22: Ignored/swallowed errors mask downstream vulnerabilities, so ensure all unhandled rejections and explicit catches funnel to a centralized reporter.

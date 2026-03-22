@@ -5,17 +5,23 @@ import DecisionTreeInput from "./DecisionTreeInput.svelte";
 import Decision from "../components/Decision.svelte";
 import DecisionReset from "../components/DecisionReset.svelte";
 import i18n from "../i18n";
+import { reportError } from "../lib/errors/reporter";
 
 async function getDecisionTreeFromURL(url: URL): Promise<DecisionTree | null> {
     const tree = url.searchParams.get("tree")
     if (tree == null) {
         return null
     }
-    if (tree.startsWith("http")) {
-        const r = await fetch(tree)
-        return r.json()
-    } else {
-        return JSON.parse(atob(tree))
+    try {
+        if (tree.startsWith("http")) {
+            const r = await fetch(tree)
+            return await r.json()
+        } else {
+            return JSON.parse(atob(tree))
+        }
+    } catch (error) {
+        reportError(error, { url: url.toString(), treeParam: tree });
+        throw error;
     }
 }
 

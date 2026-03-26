@@ -1,0 +1,1 @@
+- 2024-03-25: Document security bounds (XSS prevention) on presentation logic and routing-trigger behaviors to clarify unwritten architectural impacts for UI components.
